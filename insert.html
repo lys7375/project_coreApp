@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <title>Insert</title>
+</head>
+<body id="content">
+
+    <input type="text" id="score">
+    <br>
+    <br>
+    <input type="text" id="userName">
+    <br>
+    <br>
+    <button id = "btnSubmit" onclick="sendToServer()" type="submit">insert</button>
+    <br>
+    <br>
+    <button onclick="signOut()">signOut</button>
+
+    <script>
+        // send JSON data to server
+        function sendToServer(){
+            let myObj = {score: document.getElementById("score").value, userName: document.getElementById("userName").value};
+            let arr = [];
+            arr.push(myObj);
+
+            console.log(arr);
+            
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(arr),
+                contentType: 'application/json',
+                url: 'http://localhost:8000/insert',					
+                success: function(arr) {
+                    console.log('send to server success');
+                    console.log(JSON.stringify(arr));
+                }
+            });
+        }
+
+        function signOut(){
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(),
+                contentType: 'application/json',
+                url: 'https://core-app-server.herokuapp.com/signOut',					
+                success: function(result) {
+                    console.log('send to server success');
+                    console.log(JSON.stringify(result));
+
+                    if(result == "Sign-out successful.")
+                    {
+                        window.location.href="login.html";
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <title>Register</title>
+</head>
+<body id="content">
+
+    <input type="text" id="email">
+    <br>
+    <br>
+    <input type="text" id="password">
+    <br>
+    <br>
+    <button id = "btnSubmit" onclick="sendToServer()" type="submit">Submit</button>
+
+    <script>
+        // send JSON data to server
+        function sendToServer(){
+            let myObj = {email: document.getElementById("email").value, password: document.getElementById("password").value};
+            let arr = [];
+            arr.push(myObj);
+
+            console.log(arr);
+            
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(arr),
+                contentType: 'application/json',
+                url: 'https://core-app-server.herokuapp.com/register',					
+                success: function(result) {
+                    console.log('send to server success');
+                    console.log(JSON.stringify(result));
+
+                    if(result == "register success")
+                    {
+                        window.location.href="insert.html";
+                    }
+                }
+            });
+            
+        }
+    </script>
+</body>
+</html>
